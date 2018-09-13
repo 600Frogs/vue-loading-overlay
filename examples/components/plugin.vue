@@ -13,6 +13,11 @@
         <label class="custom-control-label" for="input-cancel-2">User can cancel?</label>
       </div>
 
+      <div class="custom-control custom-checkbox">
+        <input type="checkbox" class="custom-control-input" id="input-slot-2" v-model="useSlot">
+        <label class="custom-control-label" for="input-slot-2">Use slot?</label>
+      </div>
+
       <div class="form-group m-0">
         <label>Color</label>
         <input type="color" v-model="color">
@@ -47,6 +52,7 @@
       return {
         fullPage: true,
         canCancel: false,
+        useSlot: false,
         timeout: 3000, //ms
         color: '#007bff',
         bgColor: '#ffffff',
@@ -55,6 +61,10 @@
     },
     methods: {
       simulate() {
+        let slot = this.useSlot ? {
+          default: ['Wait ...']
+        } : {};
+
         let loader = this.$loading.show({
           container: this.fullPage ? null : this.$refs.formContainer,
           canCancel: this.canCancel,
@@ -62,7 +72,7 @@
           color: this.color,
           backgroundColor: this.bgColor,
           size: this.size,
-        });
+        }, slot);
         // simulate async call
         setTimeout(() => {
           loader.hide()
